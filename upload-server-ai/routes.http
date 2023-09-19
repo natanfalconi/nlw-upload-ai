@@ -1,0 +1,37 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name upload
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="exemple.mp3"
+Content-Type: audio/mpeg
+
+< ./exemple.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/f55bd023-d174-409a-87ec-33fdfa08380d/transcription
+Content-Type: application/json
+
+{
+    "prompt": "video aprendendo a editar, como fazer"
+}
+
+###
+
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "f55bd023-d174-409a-87ec-33fdfa08380d",
+    "temperature": 0.5,
+    "prompt": "gere um resumo sucinto da transicrição do video informada a seguir: ''' {transcription} ''' "
+}
